@@ -20,15 +20,15 @@ type StepAddBox struct {
 	Provider     string
 	SourceBox    string
 	BoxName      string
-	SkipAdd      bool
+	GlobalID     string
 }
 
 func (s *StepAddBox) Run(_ context.Context, state multistep.StateBag) multistep.StepAction {
 	driver := state.Get("driver").(VagrantDriver)
 	ui := state.Get("ui").(packer.Ui)
 
-	if s.SkipAdd {
-		ui.Say("skip_add is set; not adding vagrant box...")
+	if s.GlobalID != "" {
+		ui.Say("Using a global-id; skipping Vagrant add command...")
 		return multistep.ActionContinue
 	}
 

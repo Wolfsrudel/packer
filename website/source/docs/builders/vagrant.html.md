@@ -13,7 +13,18 @@ Required:
 	vagrant box. `hashicorp/precise64`, `./mylocalbox.box` and
 	`https://boxes.company.com/my-company.box` are all valid source boxes. If your
 	source is a .box file, whether locally or from a URL like the latter example
-	above, you will also need to provide a `box_name`.
+	above, you will also need to provide a `box_name`. This option is required,
+	unless you set `global_id` You may only set one or the other, not both.
+
+	or
+
+-  `global_id` (string) - the global id of a Vagrant box already added to Vagrant
+   on your system. You can find the global id of your Vagrant boxes using the
+   command `vagrant global-status`; your global_id will be a 7-digit number and
+   letter comination that you'll find in the leftmost column of the
+   global-status output.  If you choose to use `global_id` instead of
+   `source_box`, Packer will skip the Vagrant initialize and add steps, and
+   simply launch the box directly using the global id.
 
 Optional:
 

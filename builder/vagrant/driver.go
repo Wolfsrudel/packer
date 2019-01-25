@@ -23,15 +23,15 @@ type VagrantDriver interface {
 	Up([]string) (string, string, error)
 
 	// Calls "vagrant halt"
-	Halt() error
+	Halt(string) error
 
 	// Calls "vagrant suspend"
-	Suspend() error
+	Suspend(string) error
 
-	SSHConfig() (*VagrantSSHConfig, error)
+	SSHConfig(string) (*VagrantSSHConfig, error)
 
 	// Calls "vagrant destroy"
-	Destroy() error
+	Destroy(string) error
 
 	// Calls "vagrant package"[
 	Package([]string) error
