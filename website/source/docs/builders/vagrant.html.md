@@ -41,6 +41,10 @@ Optional:
 	for some more details on how this works. Available variables are `box_name`,
 	`box_url`, and `box_version`.
 
+-   `skip_add` (string) - Don't call "vagrant add" to add the box to your local
+	environment; this is necesasry if you want to launch a box that is already
+	added to your vagrant environment.
+
 - 	`teardown_method` (string) - Whether to halt, suspend, or destroy the box when
 	the build has completed. Defaults to "halt"
 

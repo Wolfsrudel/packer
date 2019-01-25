@@ -2,7 +2,6 @@ package vagrant
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"strings"
 
@@ -21,22 +20,22 @@ type StepAddBox struct {
 	Provider     string
 	SourceBox    string
 	BoxName      string
+	SkipAdd      bool
 }
 
 func (s *StepAddBox) Run(_ context.Context, state multistep.StateBag) multistep.StepAction {
 	driver := state.Get("driver").(VagrantDriver)
 	ui := state.Get("ui").(packer.Ui)
-	config := state.Get("config").(*Config)
+
+	if s.SkipAdd {
+		ui.Say("skip_add is set; not adding vagrant box...")
+		return multistep.ActionContinue
+	}
 
 	ui.Say("Adding box using vagrant box add..")
 	addArgs := []string{}
 
 	if strings.HasSuffix(s.SourceBox, ".box") {
-		// The box isn't a namespace like you'd pull from vagrant cloud
-		if s.BoxName == "" {
-			s.BoxName = fmt.Sprintf("packer_%s", config.PackerBuildName)
-		}
-
 		addArgs = append(addArgs, s.BoxName)
 	}
 
