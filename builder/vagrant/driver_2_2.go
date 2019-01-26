@@ -35,19 +35,31 @@ func (d *Vagrant_2_2_Driver) Up(args []string) (string, string, error) {
 
 // Calls "vagrant halt"
 func (d *Vagrant_2_2_Driver) Halt(id string) error {
-	_, _, err := d.vagrantCmd([]string{"halt", id}...)
+	args := []string{"halt"}
+	if id != "" {
+		args = append(args, id)
+	}
+	_, _, err := d.vagrantCmd(args...)
 	return err
 }
 
 // Calls "vagrant suspend"
 func (d *Vagrant_2_2_Driver) Suspend(id string) error {
-	_, _, err := d.vagrantCmd([]string{"suspend", id}...)
+	args := []string{"suspend"}
+	if id != "" {
+		args = append(args, id)
+	}
+	_, _, err := d.vagrantCmd(args...)
 	return err
 }
 
 // Calls "vagrant destroy"
 func (d *Vagrant_2_2_Driver) Destroy(id string) error {
-	_, _, err := d.vagrantCmd([]string{"destroy", "-f", id}...)
+	args := []string{"destroy", "-f"}
+	if id != "" {
+		args = append(args, id)
+	}
+	_, _, err := d.vagrantCmd(args...)
 	return err
 }
 
@@ -101,7 +113,11 @@ func yesno(yn string) bool {
 
 func (d *Vagrant_2_2_Driver) SSHConfig(id string) (*VagrantSSHConfig, error) {
 	// vagrant ssh-config --host 8df7860
-	stdout, _, err := d.vagrantCmd([]string{"ssh-config", id}...)
+	args := []string{"ssh-config"}
+	if id != "" {
+		args = append(args, id)
+	}
+	stdout, _, err := d.vagrantCmd(args...)
 	sshConf := &VagrantSSHConfig{}
 
 	lines := strings.Split(stdout, "\n")
